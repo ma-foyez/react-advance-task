@@ -10,14 +10,19 @@ const TestCounterHit = () => {
   return (
     <div className="card card-body text-center p-4">
       <h2>Counter App Demo</h2>
+      
       <div>
         <button onClick={() => dispatch({ type: "INC" })}>+</button>
-        { counter }
+        {counter}
         <button onClick={() => dispatch({ type: "DEC" })}>-</button>
       </div>
+
       <br />
-      <input value={number} onChange={(e) => setNumber(e.target.value)} />
+      <div>
+        <input value={number} onChange={(e) => setNumber(e.target.value)} />
+      </div>
       <br />
+
       <div>
         <button onClick={() => dispatch({ type: "UPDATE", payload: number })}>
           Update
