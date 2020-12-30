@@ -1,5 +1,7 @@
+import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { Container, Form, Button } from 'react-bootstrap';
+import { getTasksData, storeTaskData } from '../services/TaskService';
 import Layout from './../components/layouts/Layout';
 import TaskCreate from './../components/tasks/TaskCreate';
 import TaskList from './../components/tasks/TaskList';
@@ -16,29 +18,24 @@ function TaskListPage() {
 
     useEffect(() => {
         // Call api and get data
-        const data = [
-            // {
-            //   id: 1,
-            //   title: 'First Title',
-            //   description: 'Test Description',
-            //   priority: 'High',
-            // }
-        ];
-
-        setTasks(data);
+        initilializeData();
     }, []);
 
 
-    const createTask = (e) => {
+    const initilializeData = async () => {
+        let data = await getTasksData();
+        data.sort();
+        data.reverse();
+        setTasks(data);
+    }
+
+
+    const createTask = async (e) => {
         e.preventDefault();
 
         // validate data
         if (title.length === 0) {
             alert('Please give a title !');
-            return false;
-        }
-        if (description.length === 0) {
-            alert('Please give a description !');
             return false;
         }
         if (priority.length === 0) {
@@ -47,17 +44,20 @@ function TaskListPage() {
         }
 
         const taskItem = {
-            id: 100,
-            title,
-            description,
-            priority,
+          Title: title,
+          Priority: priority,
         }
-        const tasksData = tasks;
-        tasksData.unshift(taskItem);
-        setTasks(tasksData);
-        setTitle('');
-        setDescription('');
-        setPriority('');
+
+        // Call api and store to database
+        const isAdded = await storeTaskData(taskItem);
+        if (isAdded) {
+            setTitle("");
+            setDescription("");
+            setPriority("");
+            await initilializeData();
+        } else {
+            alert('Something went wrong !');
+        }
     }
 
     return (

@@ -2,7 +2,7 @@ import React from 'react';
 import { Form, Button } from 'react-bootstrap';
 
 const TaskCreate = (props) => {
-    const { title, setTitle, description, setDescription, priority, setPriority, createTask } = props;
+    const { title, setTitle, priority, setPriority, createTask } = props;
 
     return (
         <Form onSubmit={(e) => createTask(e)}>
@@ -11,10 +11,6 @@ const TaskCreate = (props) => {
             </h2>
             <Form.Group controlId="title">
                 <Form.Control type="text" placeholder="Enter Title" value={title} onChange={(e) => setTitle(e.target.value)} />
-            </Form.Group>
-
-            <Form.Group controlId="formBasicPassword">
-                <Form.Control type="text" as="textarea" placeholder="Enter Description" value={description} onChange={(e) => setDescription(e.target.value)} />
             </Form.Group>
 
             <Form.Group controlId="formBasicPassword">
