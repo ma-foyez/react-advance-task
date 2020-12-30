@@ -1,6 +1,8 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { Container, Form, Button } from 'react-bootstrap';
+import CounterComponent from '../components/counter/CounterComponent';
+import TestCounterHit from '../components/counter/TestCounterHit';
 import { getTasksData, storeTaskData } from '../services/TaskService';
 import Layout from './../components/layouts/Layout';
 import TaskCreate from './../components/tasks/TaskCreate';
@@ -70,22 +72,33 @@ function TaskListPage() {
     }
 
     return (
-        <Layout>
-            {
-                isCreateMode && (
-                    <TaskCreate
-                        title={title}
-                        setTitle={(val) => setTitle(val)}
-                        description={description}
-                        setDescription={(val) => setDescription(val)}
-                        priority={priority}
-                        setPriority={(val) => setPriority(val)}
-                        createTask={(val) => createTask(val)}
-                    />
-                )
-            }
-            <TaskList tasks={tasks} onclickHandler={() => setIsCreateMode(isCreateMode ? false : true)} />
-        </Layout>
+      <Layout>
+        <br />
+        <br />
+        <br />
+        <br />
+        <CounterComponent />
+            <br />
+        <TestCounterHit />
+        <br />
+        <br />
+        <br />
+        {isCreateMode && (
+          <TaskCreate
+            title={title}
+            setTitle={(val) => setTitle(val)}
+            description={description}
+            setDescription={(val) => setDescription(val)}
+            priority={priority}
+            setPriority={(val) => setPriority(val)}
+            createTask={(val) => createTask(val)}
+          />
+        )}
+        <TaskList
+          tasks={tasks}
+          onclickHandler={() => setIsCreateMode(isCreateMode ? false : true)}
+        />
+      </Layout>
     );
 }
 

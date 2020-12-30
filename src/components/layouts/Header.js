@@ -1,6 +1,7 @@
 import React from 'react';
 import { Navbar, Nav, Form, FormControl, Button } from 'react-bootstrap';
 import { Link } from "react-router-dom";
+import CounterComponentDislpay from '../counter/CounterComponentDislpay';
 
 const Header = () => {
     return (
@@ -12,6 +13,9 @@ const Header = () => {
                     <Link to="/" className="nav-link">Home</Link>
                     <Link to="/detail" className="nav-link">Task detail</Link>
                     <Link to="/about-us" className="nav-link">About Us</Link>
+                    <Link to="/about-us" className="nav-link">
+                        <CounterComponentDislpay />
+                    </Link>
                 </Nav>
                 <Form inline>
                     <FormControl type="text" placeholder="Search" className="mr-sm-2" />
