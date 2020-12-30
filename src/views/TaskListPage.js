@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import CounterComponent from "../components/counter/CounterComponent";
 import TestCounterHit from "../components/counter/TestCounterHit";
-import { getTasksData, storeTaskData } from "../services/TaskService";
+import { getTasksDataAction } from "../redux/actions/TaskAction";
 import Layout from "./../components/layouts/Layout";
 import TaskCreate from "./../components/tasks/TaskCreate";
 import TaskList from "./../components/tasks/TaskList";
@@ -16,15 +16,9 @@ function TaskListPage() {
   const tasks = useSelector((state) => state.tasks);
 
   useEffect(() => {
-    initilializeData();
+    dispatch(getTasksDataAction());
   }, []);
 
-  const initilializeData = async () => {
-    let data = await getTasksData();
-    data.sort();
-    data.reverse();
-    dispatch({ type: "GET_TASKS", payload: data });
-  };
 
   return (
     <Layout>

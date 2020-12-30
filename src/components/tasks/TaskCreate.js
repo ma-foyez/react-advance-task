@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Form, Button } from 'react-bootstrap';
-import { getTasksData, storeTaskData } from "../../services/TaskService";
 import { useDispatch } from 'react-redux';
+import { storeTasksDataAction } from "../../redux/actions/TaskAction";
 
 const TaskCreate = (props) => {
   const dispatch = useDispatch();
@@ -27,14 +27,7 @@ const TaskCreate = (props) => {
         Title: title,
         Priority: priority,
       };
-
-      await storeTaskData(taskItem);
-      dispatch({ type: 'ADD_TASK', payload: taskItem });
-      
-      let data = await getTasksData();
-      data.sort();
-      data.reverse();
-      dispatch({ type: "GET_TASKS", payload: data });
+      dispatch(storeTasksDataAction(taskItem));
     };
 
     return (

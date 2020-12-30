@@ -9,74 +9,9 @@ import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
 
-const initiliazeState = {
-  counter: 20,
-  tasks : []
-};
+import Store from "./redux/store/Store";
 
-function CounterReducer(state = initiliazeState, action) {
-  switch (action.type) {
-    case "GET_COUNTER":
-      return {
-        ...state,
-      };
-      break;
-
-    case "INC":
-      let updatedIncrementValue =
-        typeof action.payload === "undefined" ? 1 : action.payload;
-      updatedIncrementValue = parseInt(updatedIncrementValue);
-
-      return {
-        ...state,
-        counter: state.counter + updatedIncrementValue,
-      };
-      break;
-
-    // case "INC_SPECIFIC":
-    //   return {
-    //     ...state,
-    //     counter: state.counter + parseInt(action.payload),
-    //   };
-    //   break;
-
-    case "DEC":
-      return {
-        ...state,
-        counter: state.counter - 1,
-      };
-      break;
-
-    case "UPDATE":
-      return {
-        ...state,
-        counter: action.payload,
-      };
-      break;
-
-    case "GET_TASKS":
-      return {
-        ...state,
-        tasks: action.payload,
-      };
-      break;
-
-    case "ADD_TASK":
-      return {
-        ...state,
-      };
-      break;
-
-    default:
-      break;
-  }
-  return state;
-}
-
-let store = createStore(
-  CounterReducer,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-);
+let store = Store();
 
 ReactDOM.render(
   <Provider store={store}>
