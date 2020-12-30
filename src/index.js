@@ -11,6 +11,7 @@ import { createStore } from "redux";
 
 const initiliazeState = {
   counter: 20,
+  tasks : []
 };
 
 function CounterReducer(state = initiliazeState, action) {
@@ -22,16 +23,47 @@ function CounterReducer(state = initiliazeState, action) {
       break;
 
     case "INC":
+      let updatedIncrementValue =
+        typeof action.payload === "undefined" ? 1 : action.payload;
+      updatedIncrementValue = parseInt(updatedIncrementValue);
+
       return {
         ...state,
-        counter: state.counter + 1,
+        counter: state.counter + updatedIncrementValue,
       };
       break;
+
+    // case "INC_SPECIFIC":
+    //   return {
+    //     ...state,
+    //     counter: state.counter + parseInt(action.payload),
+    //   };
+    //   break;
 
     case "DEC":
       return {
         ...state,
         counter: state.counter - 1,
+      };
+      break;
+
+    case "UPDATE":
+      return {
+        ...state,
+        counter: action.payload,
+      };
+      break;
+
+    case "GET_TASKS":
+      return {
+        ...state,
+        tasks: action.payload,
+      };
+      break;
+
+    case "ADD_TASK":
+      return {
+        ...state,
       };
       break;
 

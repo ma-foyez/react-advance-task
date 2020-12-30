@@ -1,105 +1,50 @@
-import axios from 'axios';
-import React, { useState, useEffect } from 'react';
-import { Container, Form, Button } from 'react-bootstrap';
-import CounterComponent from '../components/counter/CounterComponent';
-import TestCounterHit from '../components/counter/TestCounterHit';
-import { getTasksData, storeTaskData } from '../services/TaskService';
-import Layout from './../components/layouts/Layout';
-import TaskCreate from './../components/tasks/TaskCreate';
-import TaskList from './../components/tasks/TaskList';
+import axios from "axios";
+import React, { useState, useEffect } from "react";
+import { Container, Form, Button } from "react-bootstrap";
+import { useSelector, useDispatch } from "react-redux";
+
+import CounterComponent from "../components/counter/CounterComponent";
+import TestCounterHit from "../components/counter/TestCounterHit";
+import { getTasksData, storeTaskData } from "../services/TaskService";
+import Layout from "./../components/layouts/Layout";
+import TaskCreate from "./../components/tasks/TaskCreate";
+import TaskList from "./../components/tasks/TaskList";
 
 function TaskListPage() {
+  const dispatch = useDispatch();
+  const [isCreateMode, setIsCreateMode] = useState(false);
+  const tasks = useSelector((state) => state.tasks);
 
-    const [isCreateMode, setIsCreateMode] = useState(false);
-    const [tasks, setTasks] = useState([]);
+  useEffect(() => {
+    initilializeData();
+  }, []);
 
-    const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('');
-    const [priority, setPriority] = useState();
-    const [isAdded, setIsAdded] = useState(false);
+  const initilializeData = async () => {
+    let data = await getTasksData();
+    data.sort();
+    data.reverse();
+    dispatch({ type: "GET_TASKS", payload: data });
+  };
 
-    useEffect(() => {
-        // Call api and get data
-        initilializeData();
-    }, []);
-
-
-    const initilializeData = async () => {
-        let data = await getTasksData();
-        data.sort();
-        data.reverse();
-        setTasks(data);
-    }
-
-
-    const createTask = async (e) => {
-        e.preventDefault();
-
-        // validate data
-        if (title.length === 0) {
-            alert('Please give a title !');
-            return false;
-        }
-        if (priority.length === 0) {
-            alert('Please give a priority !');
-            return false;
-        }
-
-        const taskItem = {
-          Title: title,
-          Priority: priority,
-        }
-
-        // const store = {
-        //   tasksList: [],
-        //   taskForm: {
-        //         Title: "",
-        //             Priority: "",
-        //     },
-        //     isTaskAdded: false,
-        // };
-
-        // Call api and store to database
-        const isAdded = await storeTaskData(taskItem);
-        if (isAdded) {
-            setTitle("");
-            setDescription("");
-            setPriority("");
-            await initilializeData();
-        } else {
-            alert('Something went wrong !');
-        }
-    }
-
-    return (
-      <Layout>
-        <br />
-        <br />
-        <br />
-        <br />
-        <CounterComponent />
-            <br />
-        <TestCounterHit />
-        <br />
-        <br />
-        <br />
-        {isCreateMode && (
-          <TaskCreate
-            title={title}
-            setTitle={(val) => setTitle(val)}
-            description={description}
-            setDescription={(val) => setDescription(val)}
-            priority={priority}
-            setPriority={(val) => setPriority(val)}
-            createTask={(val) => createTask(val)}
-          />
-        )}
-        <TaskList
-          tasks={tasks}
-          onclickHandler={() => setIsCreateMode(isCreateMode ? false : true)}
-        />
-      </Layout>
-    );
+  return (
+    <Layout>
+      <br />
+      <br />
+      <br />
+      <br />
+      <CounterComponent />
+      <br />
+      <TestCounterHit />
+      <br />
+      <br />
+      <br />
+      {isCreateMode && <TaskCreate />}
+      <TaskList
+        tasks={tasks}
+        onclickHandler={() => setIsCreateMode(isCreateMode ? false : true)}
+      />
+    </Layout>
+  );
 }
 
 export default TaskListPage;
