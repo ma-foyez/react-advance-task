@@ -12,7 +12,7 @@ const TaskCreate = (props) => {
             <Form.Group controlId="title">
                 <Form.Control type="text" placeholder="Enter Title" value={title} onChange={(e) => setTitle(e.target.value)} />
             </Form.Group>
-
+            
             <Form.Group controlId="formBasicPassword">
                 <select className="form-control" value={priority} onChange={(e) => setPriority(e.target.value)}>
                     <option value={''}>Select Task Priority</option>

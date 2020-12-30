@@ -48,6 +48,15 @@ function TaskListPage() {
           Priority: priority,
         }
 
+        // const store = {
+        //   tasksList: [],
+        //   taskForm: {
+        //         Title: "",
+        //             Priority: "",
+        //     },
+        //     isTaskAdded: false,
+        // };
+
         // Call api and store to database
         const isAdded = await storeTaskData(taskItem);
         if (isAdded) {
