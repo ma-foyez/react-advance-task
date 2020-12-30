@@ -5,8 +5,6 @@ import { storeTasksDataAction } from "../../redux/actions/TaskAction";
 
 const TaskCreate = (props) => {
   const dispatch = useDispatch();
-    // const { title, setTitle, priority, setPriority, createTask } = props;
-
     const [title, setTitle] = useState('');
     const [priority, setPriority] = useState('');
 

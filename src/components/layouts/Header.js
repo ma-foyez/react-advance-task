@@ -7,7 +7,8 @@ import { useSelector } from "react-redux";
 
 const Header = () => {
 
-    const tasks = useSelector((state) => state.tasks);
+    const tasks = useSelector((state) => state.TaskReducer.tasks);
+    const counter = useSelector((state) => state.CounterReducer.counter);
     
     return (
       <Navbar bg="light" expand="lg">
@@ -26,7 +27,7 @@ const Header = () => {
               About Us
             </Link>
             <Link to="/about-us" className="nav-link">
-              <CounterComponentDislpay />
+              {counter}
             </Link>
           </Nav>
           <Form inline>
