@@ -1,26 +1,35 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Form, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import {
   storeTasksDataAction,
   handleChangeTextInputAction,
+  getTasksDetailDataAction,
+  updateTasksDataAction,
 } from "../../redux/actions/TaskAction";
 
-const TaskCreate = () => {
+const TaskEdit = (props) => {
   const dispatch = useDispatch();
+  const params = useParams();
+  const { id } = params;
   const taskForm = useSelector((state) => state.TaskReducer.taskForm);
 
   const handleChangeText = (name, value) => {
     dispatch(handleChangeTextInputAction(name, value));
   }
 
-  const createTask = async (e) => {
+  useEffect(() => {
+    dispatch(getTasksDetailDataAction(id));
+  }, [])
+
+  const updateTask = async (e) => {
     e.preventDefault();
-    dispatch(storeTasksDataAction(taskForm));
+    dispatch(updateTasksDataAction(taskForm, id));
   };
 
   return (
-    <Form onSubmit={(e) => createTask(e)}>
+    <Form onSubmit={(e) => updateTask(e)}>
       <h2 className="mt-5 pb-2">New Task</h2>
       <Form.Group controlId="title">
         <Form.Control
@@ -51,4 +60,4 @@ const TaskCreate = () => {
   );
 };
 
-export default TaskCreate;
+export default TaskEdit;

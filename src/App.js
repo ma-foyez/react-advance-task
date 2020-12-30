@@ -6,9 +6,10 @@ import {
 } from "react-router-dom";
 import AboutPage from "./views/AboutPage";
 import TaskDetailPage from "./views/TaskDetailPage";
+import TaskEditPage from "./views/TaskEditPage";
 import TaskListPage from "./views/TaskListPage";
 
-export default function App() {
+export default function App(props) {
   return (
     <Router>
       <Switch>
@@ -18,6 +19,10 @@ export default function App() {
 
         <Route path="/detail" exact={true}>
           <TaskDetailPage />
+        </Route>
+
+        <Route path="/edit/:id" exact={true}>
+          <TaskEditPage />
         </Route>
 
         <Route path="/" exact={true}>

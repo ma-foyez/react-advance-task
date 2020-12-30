@@ -34,7 +34,7 @@ function CounterReducer(state = initiliazeState, action) {
     case Types.UPDATE:
       return {
         ...state,
-        counter: action.payload,
+        counter: parseInt(action.payload),
       };
       break;
 
